@@ -27,9 +27,14 @@ async function run() {
     // await client.connect();
 
 const touristSpotCollection=client.db('tourMaster').collection('touristSpots')
+const spotCollection=client.db('tourMaster').collection('allSpots')
 
 app.get('/touristSpot',async(req,res)=>{
     const result= await touristSpotCollection.find().toArray()
+    res.send(result)
+})
+app.get('/allSpots',async(req,res)=>{
+    const result= await spotCollection.find().toArray()
     res.send(result)
 })
 
