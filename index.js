@@ -43,7 +43,14 @@ app.post("/allSpots", async (req, res) => {
   res.send(result);
 });
 
-// get all submitted assignment by Specefic User
+app.delete("/allSpots/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await spotCollection.deleteOne(query);
+  res.send(result);
+});
+
+// get all spots added by Specefic User
 app.get("/allSpots/:email", async (req, res) => {
   const email = req.params.email;
   const query = { 'creator.email' : email  };
