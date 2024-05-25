@@ -43,6 +43,14 @@ app.post("/allSpots", async (req, res) => {
   res.send(result);
 });
 
+// get all submitted assignment by Specefic User
+app.get("/allSpots/:email", async (req, res) => {
+  const email = req.params.email;
+  const query = { 'creator.email' : email  };
+  const result = await spotCollection.find(query).toArray();
+  res.send(result);
+});
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
