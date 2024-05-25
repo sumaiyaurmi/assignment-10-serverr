@@ -37,7 +37,11 @@ app.get('/allSpots',async(req,res)=>{
     const result= await spotCollection.find().toArray()
     res.send(result)
 })
-
+app.post("/allSpots", async (req, res) => {
+  const spotData = req.body;
+  const result = await spotCollection.insertOne(spotData);
+  res.send(result);
+});
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
