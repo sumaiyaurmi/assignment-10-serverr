@@ -28,18 +28,37 @@ async function run() {
 
 const touristSpotCollection=client.db('tourMaster').collection('touristSpots')
 const spotCollection=client.db('tourMaster').collection('allSpots')
+const countryCollection=client.db('tourMaster').collection('countries')
 
 app.get('/touristSpot',async(req,res)=>{
     const result= await touristSpotCollection.find().toArray()
     res.send(result)
 })
+app.get("/touristSpot/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await touristSpotCollection.findOne(query);
+  res.send(result);
+});
+
+
+
 app.get('/allSpots',async(req,res)=>{
     const result= await spotCollection.find().toArray()
     res.send(result)
 })
+
+
 app.post("/allSpots", async (req, res) => {
   const spotData = req.body;
   const result = await spotCollection.insertOne(spotData);
+  res.send(result);
+});
+
+app.get("/allSpot/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await spotCollection.findOne(query);
   res.send(result);
 });
 
@@ -57,6 +76,13 @@ app.get("/allSpots/:email", async (req, res) => {
   const result = await spotCollection.find(query).toArray();
   res.send(result);
 });
+
+// country api
+app.get('/country',async(req,res)=>{
+  const result= await countryCollection.find().toArray()
+  res.send(result)
+})
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
