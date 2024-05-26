@@ -77,6 +77,25 @@ app.get("/allSpots/:email", async (req, res) => {
   res.send(result);
 });
 
+app.put("/allSpot/:id", async (req, res) => {
+  const id = req.params.id;
+  const spotData = req.body;
+  const query = { _id: new ObjectId(id) };
+  const options = { upsert: true };
+  const updateDocs = {
+    $set: {
+      ...spotData,
+    },
+  };
+  const result = await spotCollection.updateOne(
+    query,
+    updateDocs,
+    options
+  );
+  res.send(result);
+});
+
+
 // country api
 app.get('/country',async(req,res)=>{
   const result= await countryCollection.find().toArray()
