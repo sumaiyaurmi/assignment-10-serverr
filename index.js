@@ -101,7 +101,12 @@ app.get('/country',async(req,res)=>{
   const result= await countryCollection.find().toArray()
   res.send(result)
 })
-
+app.get("/country/:country_name", async (req, res) => {
+  const country_name = req.params.country_name;
+  const query = { country : country_name  };
+  const result = await spotCollection.find(query).toArray();
+  res.send(result);
+});
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
